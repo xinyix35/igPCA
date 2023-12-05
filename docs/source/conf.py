@@ -41,7 +41,6 @@ extensions = [
     'sphinx.ext.duration',
     'sphinx.ext.doctest',
     'sphinx.ext.autosummary',
-    "nbsphinx",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
