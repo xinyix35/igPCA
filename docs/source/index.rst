@@ -5,12 +5,11 @@
 
 Welcome to igPCA's documentation!
 =================================
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-
+    
+    .. toctree::
+       :maxdepth: 2
+       :caption: Contents:
+        README.md
 
 Indices and tables
 ==================
