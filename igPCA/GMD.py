@@ -9,12 +9,13 @@ from numpy import linalg as LA
 
 
 class GMD:
-    """
-    This class implements the Generalized Matrix Decomposition (GMD) and supports sparse loading and score given by lasso.
+    '''
+    This class implements the Generalized Matrix Decomposition (GMD)
+    and supports sparse loading and score given by lasso.
 
     Parameters
     ----------
-    X : {array-like, sparse matrix of shape (int n, int p)}
+    X : {array-like, sparse matrix} of shape (int n, int p)
 
     H : {array-like, matrix} of shape (int n, int n)
         Matrix Characterizing the (dis)similarity structure of sample space of X
@@ -22,25 +23,24 @@ class GMD:
     Q : {array-like, matrix} of shape (int p, int p)
         Matrix Characterizing the (dis)similarity structure of variable space of X
 
-    K : int, default=3
+    K: int, default=3
         Number of components to keep
 
-    max_iter : int, default=50
+    max_iter: int, default=50
         The maximum number of iterations.
 
-    tol : float, default=1e-4
+    tol: float, default=1e-4
         The tolerance for the optimization: if the updates are smaller than tol, the 
         optimization code checks the dual gap for optimality and continues until it 
         is smaller than tol
 
-    lu : float, default=None
+    lu: float, default=None
         Constant that multiplies the L1 term with respect to score(U), 
         controlling regularization strength. lu must be a non-negative float i.e. in [0, inf).
 
-    lv : float, default=None
+    lv: float, default=None
         Constant that multiplies the L1 term with respect to loading(V), 
         controlling regularization strength. lu must be a non-negative float i.e. in [0, inf).
-
 
     Attributes
     ----------
@@ -53,12 +53,29 @@ class GMD:
     V : {array-like, matrix} of shape (p, K)
         Estimated GMD loading
 
-    X_hat : {array-like, matrix} of shape (n, K)
+    X_hat: {array-like, matrix} of shape (n, K)
         Estimated GMD value, it is equivalent to the mean matrix of X when assuming 
-        ``X ~ MN_{n,p}(X_hat, H^{-1}, Q^{-1})``
-    """
+        X ~ MN_{n,p}(X_hat, H^{-1}, Q^{-1})
 
-    def __init__(self, X, H, Q, K=3, max_iter=50, tol=1e-4):
+    Example
+    ----------
+    U = np.loadtxt('demo_data/U_0.8.csv', delimiter=",", dtype=float)
+    H = np.loadtxt('demo_data/H_0.8.csv', delimiter=",", dtype=float)
+    V = np.loadtxt('demo_data/V1_0.8.csv', delimiter=",", dtype=float)
+    Q = np.loadtxt('demo_data/Q1_0.8.csv', delimiter=",", dtype=float)
+    X = np.loadtxt('demo_data/X_gmd.csv', delimiter=" ", dtype=float)
+    M = np.loadtxt('demo_data/M_gmd.csv', delimiter=" ", dtype=float)
+
+    U = U[:, [1, 0]]
+    model = GMD(X, H, Q, K = 2)
+    model.fit()
+    plt.plot(model.U[:,0], label = "estimated")
+    plt.plot(U[:,0], label ="true ")
+    plt.legend(loc = "best")
+    plt.show()
+    '''
+
+    def __init__(self, X, H, Q, K=3, max_iter=50, tol=1e-4, lu=0, lv=0):
         self.n, self.p = X.shape
         # to store the original data
         self.X = X
@@ -66,6 +83,9 @@ class GMD:
         self.Q = Q
         # k is the rank for GMD specified in advanced
         self.K = K
+        # input of penalized parameter
+        self.lu = lu
+        self.lv = lv
         # initialize parameters for iterations
         self.u = np.zeros(self.n).reshape(self.n, 1)
         self.v = np.zeros(self.p).reshape(self.p, 1)
@@ -126,17 +146,17 @@ class GMD:
                     break
 
     # update u and v for once
-    def __compute_uv_vector__(self, lu, lv):
+    def __compute_uv_vector__(self):
         cons_u = np.matmul(self.X, self.Q)
         cons_v = np.matmul(np.transpose(self.X), self.H)
         # compute u
         u_nscale = self.__soft_thresholding__(
-            lu, np.matmul(cons_u, self.v))
+            self.lu, np.matmul(cons_u, self.v))
         u_norm = self.__compute_A_norm__(self.H, u_nscale)
         self.u = (u_norm > 0) * u_nscale / u_norm
         # compute v
         v_nscale = self.__soft_thresholding__(
-            lv, np.matmul(cons_v, self.u))
+            self.lv, np.matmul(cons_v, self.u))
         v_norm = self.__compute_A_norm__(self.Q, v_nscale)
         self.v = (v_norm > 0) * v_nscale / v_norm
 
@@ -156,7 +176,7 @@ class GMD:
         fitted_value = np.matmul(component, np.transpose(self.V))
         return fitted_value
 
-    def fit(self, lu=0, lv=0):
+    def fit(self):
         # iterates over rank
         for component in range(self.K):
             # update u,v
@@ -169,7 +189,7 @@ class GMD:
             # keep computing till convergence or reach the maximum iterations
             while error > self.tol:
                 # compute u and v
-                self.__compute_uv_vector__(lu, lv)
+                self.__compute_uv_vector__()
                 num_iter = num_iter + 1
                 # validate whether the algorithm converges
                 error = LA.norm(self.u - u0, 2) + LA.norm(self.v - v0, 2)
