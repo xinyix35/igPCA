@@ -1,0 +1,389 @@
+:py:mod:`igPCA.Selection`
+=========================
+
+.. py:module:: igPCA.Selection
+
+.. autoapi-nested-parse::
+
+   Rank Selection for double-structured Data
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   igPCA.Selection.SelectionMethod
+   igPCA.Selection.PosteriorMean
+   igPCA.Selection.GMDRegression
+   igPCA.Selection.spilt
+   igPCA.Selection.BiCrossValidation
+
+
+
+
+.. py:class:: SelectionMethod(by_insert=True, A=None, B=None, C=None, D=None, Sigma_11=None, Sigma_12=None, Sigma_21=None, Sigma_22=None, Phi_11=None, Phi_12=None, Phi_21=None, Phi_22=None, X=None, Sigma=None, Phi=None, m=0, t=0)
+
+
+   This class is the parent of the classes of two rank selection models, that is,
+   GMD regression model and Posterior Mean Model
+
+   :param by_insert: if True, then all the components are inserted;
+                     else, input the following paramters to initialize
+   :type by_insert: boolean, indicating how the class is initialized
+   :param X:
+   :type X: {array-like, sparse matrix} of shape (int n, int p)
+   :param Sigma:
+   :type Sigma: {array-like, sparse matrix} of shape (int n, int n)
+   :param Phi:
+   :type Phi: {array-like, sparse matrix} of shape (int p, int p)
+   :param m: if greater than 0, each blocks are partitioned when initializing
+             otherwise, each block need to be inserted
+   :type m: int, number of rows of the targeted block;
+   :param t: if greater than 0, each blocks are partitioned when initializing
+             otherwise, each block need to be inserted
+   :type t: int, number of columns of the targeted block;
+
+   .. py:method:: __partition__(matrix, nrow, ncol)
+
+
+   .. py:method:: __init_data_by_input__(A, B, C, D)
+
+
+   .. py:method:: __init_sigma_by_input__(A, B, C, D)
+
+
+   .. py:method:: __init_phi_by_input__(A, B, C, D)
+
+
+   .. py:method:: __compute_QH_norm__(H, Q, A)
+
+
+   .. py:method:: __mse_evaluation__(est_A)
+
+
+
+.. py:class:: PosteriorMean(by_insert, A=None, B=None, C=None, D=None, Sigma_11=None, Sigma_12=None, Sigma_21=None, Sigma_22=None, Phi_11=None, Phi_12=None, Phi_21=None, Phi_22=None, X=None, Sigma=None, Phi=None, m=0, t=0)
+
+
+   Bases: :py:obj:`SelectionMethod`
+
+   This class computes the error of a pre-specified partition of data
+   at any rank k, under the Posterior Mean Model
+
+   .. py:method:: __fit_once__(data, H, Q, k)
+
+
+   .. py:method:: forward_fixed_rank(k)
+
+      Apply GMD to B, C, D to obtained estmated means, then estimate
+      M_A by self-consistency theorem
+
+      Paramater
+      ---------
+      k: int, must be greater than 0
+          the specified rank that we computes the error
+
+      :rtype: Etsimated means of M_A, M_B, M_C, and M_D
+
+
+   .. py:method:: __compute_conditional_mean__(k)
+
+      Compute the conditional mean of A by the
+      estimated means for a fixed rank k
+
+      Paramater
+      ---------
+      k: int, must be greater than 0
+          the specified rank that we computes the error
+
+      :rtype: Posterior Mean of M_A
+
+
+   .. py:method:: error_k(k)
+
+      Paramater
+      ---------
+      k: int, must be greater than 0
+          the specified rank that we computes the error
+
+      :returns: **float**
+      :rtype: the error of estimation at rank k
+
+
+
+.. py:class:: GMDRegression(by_insert=True, A=None, B=None, C=None, D=None, Sigma_11=None, Sigma_12=None, Sigma_21=None, Sigma_22=None, Phi_11=None, Phi_12=None, Phi_21=None, Phi_22=None, X=None, Sigma=None, Phi=None, m=0, t=0)
+
+
+   Bases: :py:obj:`SelectionMethod`
+
+   This class computes the error of a pre-specified partition of data
+   at any rank k, under the GMD Regression Model
+
+   .. py:method:: __regression_fixed_rank__(k)
+
+
+   .. py:method:: __estimate_A__(beta)
+
+
+   .. py:method:: error_k(k)
+
+      Paramater
+      ---------
+      k: int, must be greater than 0
+          the specified rank that we computes the error
+
+      :returns: **float**
+      :rtype: the error of estimation at rank k
+
+
+
+.. py:class:: spilt(n, p, h=5, l=5)
+
+
+   This class motivates the data spilting process used in Bi-Cross Validation (bcv.py)
+   by the following steps:
+   1. Generating the partitions of rows and column with particular matrix size(n,p) and fold-size(h,l)
+   2. Reorganize the (i,j)-block of matrix to the top left corner
+   3. Generate the corresponding row/column indices for matrices after reorganizing
+
+   :param n:
+   :type n: int, nodefault value, sample size of the original data
+   :param p:
+   :type p: int, no default value, number of covariates of the original data
+   :param h:
+   :type h: int, default = 5, number of partition(fold) in sample
+   :param l:
+   :type l: int, default = 5, number of partition(fold) in covariate
+
+   .. rubric:: Example
+
+   1. first define a split object, and process the data
+   sp = _spilt(n,p,h,l)
+   sp.forward()
+   2. To obatin the blocks of data X when the (i,j)-block is moved to the top left corner
+   by calling the function split_data() in the class:
+   A, B, C, D = sp.split_data(X, i, j)
+
+   .. py:method:: __row_par_index__()
+
+      Obatin the size of each partition (in row), and thus obatin
+      the next one index of each partition
+
+      .. rubric:: Example
+
+      row = [i for i in range(11)]
+      h = 3
+      row_size = [4,4,3]
+      row_index = [0,4,8,11]
+
+      To obtain the first partition, we have row[0:4] = [0,1,2,3]
+      To obatin the second partition, we have row[4:8] = [4,5,6,7]
+      To obatin the third partition, we have row[8:11] = [8,9,10]
+
+
+   .. py:method:: __col_par_index__()
+
+      generate the size of each partition (in column), and thus obatin
+      the first index of each partition
+
+
+   .. py:method:: forward()
+
+
+   .. py:method:: __A_index__(i, j)
+
+      Paramater
+      ---------
+      i: int, index of row partition, starts from 0
+      j: int, index of row partition, starts from 0
+
+      :rtype: the row indices and column indices of the (i,j)-block of data
+
+
+   .. py:method:: __B_index__(i, j)
+
+      Paramater
+      ---------
+      i: int, index of row partition, starts from 0
+      j: int, index of row partition, starts from 0
+
+      :rtype: the row indices and column indices of the (i,\j)-block of data
+
+
+   .. py:method:: __C_index__(i, j)
+
+      Paramater
+      ---------
+      i: int, index of row partition, starts from 0
+      j: int, index of row partition, starts from 0
+
+      :rtype: the row indices and column indices of the (\i,j)-block of data
+
+
+   .. py:method:: __D_index__(i, j)
+
+      Paramater
+      ---------
+      i: int, index of row partition, starts from 0
+      j: int, index of row partition, starts from 0
+
+      :rtype: the row indices and column indices of the (\i,\j)-block of data
+
+
+   .. py:method:: __sigma_11_index__(i)
+
+      Paramater
+      ---------
+      i: int, index of row partition, starts from 0
+
+      :rtype: the index list of the row covariance matrix for (i,*)-block
+
+
+   .. py:method:: __sigma_22_index__(i)
+
+      Paramater
+      ---------
+      i: int, index of row partition, starts from 0
+
+      :rtype: the index list of the row covariance matrix for (\i,*)-block
+
+
+   .. py:method:: __sigma_12_index__(i)
+
+      Paramater
+      ---------
+      i: int, index of row partition, starts from 0
+
+      :returns: * *tthe row indices and column indices for the row covariance matrix between*
+                * *(i,*)-block and (\i,*)-block*
+
+
+   .. py:method:: __sigma_21_index__(i)
+
+      Paramater
+      ---------
+      i: int, index of row partition, starts from 0
+
+      :returns: * *tthe row indices and column indices for the row covariance matrix between*
+                * *(\i,*)-block and (i,*)-block*
+
+
+   .. py:method:: __phi_11_index__(j)
+
+      Paramater
+      ---------
+      j: int, index of column partition, starts from 0
+
+      :rtype: the index list of the row covariance matrix for (*,j)-block
+
+
+   .. py:method:: __phi_22_index__(j)
+
+      Paramater
+      ---------
+      j: int, index of column partition, starts from 0
+
+      :rtype: the index list of the row covariance matrix for (*,\j)-block
+
+
+   .. py:method:: __phi_12_index__(j)
+
+      Paramater
+      ---------
+      i: int, index of row partition, starts from 0
+
+      :returns: * *tthe row indices and column indices for the column covariance matrix between*
+                * *(*,j)-block and (*,\j)-block*
+
+
+   .. py:method:: __phi_21_index__(j)
+
+      Paramater
+      ---------
+      i: int, index of row partition, starts from 0
+
+      :returns: * *tthe row indices and column indices for the column covariance matrix between*
+                * *(*,\j)-block and (*,j)-block*
+
+
+   .. py:method:: split_data(X, i, j)
+
+      Paramater
+      ---------
+      X : {array-like, sparse matrix} of shape (int n, int p)
+
+      i: int, index of row partition, starts from 0
+
+      j: int, index of column partition, starts from 0
+
+      :rtype: List of the four new blocks when (i,j)-block being the targeted partition
+
+
+   .. py:method:: split_sigma(Sigma, i)
+
+      Paramater
+      ---------
+      Sigma : {array-like, sparse matrix} of shape (int n, int n)
+
+      i: int, index of row partition, starts from 0
+
+
+      :rtype: List of the four row covariance matrices when (i,j)-block being the targeted partition
+
+
+   .. py:method:: split_phi(Phi, j)
+
+      Paramater
+      ---------
+      Phi : {array-like, sparse matrix} of shape (int p, int p)
+
+      j: int, index of column partition, starts from 0
+
+
+      :rtype: List of the four column covariance matrices when (i,j)-block being the targeted partition
+
+
+
+.. py:class:: BiCrossValidation(X, Sigma, Phi, h, l, K, method='pst')
+
+
+   BCV is the class to carry out the bi-cross validation process
+
+
+   :param X:
+   :type X: {array-like, sparse matrix} of shape (int n, int p)
+   :param Sigma:
+   :type Sigma: {array-like, sparse matrix} of shape (int n, int n)
+   :param Phi:
+   :type Phi: {array-like, sparse matrix} of shape (int p, int p)
+   :param h:
+   :type h: int, default = 5, number of partition(fold) in sample
+   :param l:
+   :type l: int, default = 5, number of partition(fold) in covariate
+   :param K: If K is an integer, the candidates will be [1, 2, ....K]
+   :type K: {list(int), int}, candidiates for the rank of tiplet (X, H, Q)
+   :param method:
+   :type method: str in {'pst', 'reg'}, default = 'pst'
+
+   .. py:method:: _init_model_(i, j)
+
+
+   .. py:method:: fit()
+
+      Fit the Rank Selection model with different rank for all the h*l folds,
+      and store the result in an array self.error_mean:
+          store mean error for every fold, with $K$ different values corresponding
+          to different ranks in K(list)
+
+
+   .. py:method:: rank_selection(plot=True, fig_name=None)
+
+      :rtype: ranks by both minimum error as well as one-stanard error rule
+
+
+

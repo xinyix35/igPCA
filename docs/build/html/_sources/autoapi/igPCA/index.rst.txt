@@ -1,0 +1,35 @@
+:py:mod:`igPCA`
+===============
+
+.. py:module:: igPCA
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   GMD/index.rst
+   Selection/index.rst
+   igPCA/index.rst
+
+
+Package Contents
+----------------
+
+.. py:data:: name
+   :value: 'igPCA'
+
+   
+
+.. py:data:: all
+   :value: ['GMD', 'igPCA', 'Selection']
+
+   
+
+.. py:data:: __version__
+   :value: '1.0.0'
+
+   
+

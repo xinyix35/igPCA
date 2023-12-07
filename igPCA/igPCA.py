@@ -15,17 +15,17 @@ class igPCA:
 
     Parameters
     ----------
-    X1 : {array-like, sparse matrix} of shape (int n, int p1)
+    X1 : array-like matrix of shape (int n, int p1)
 
-    X2 : {array-like, sparse matrix} of shape (int n, int p2)
+    X2 : array-like matrix of shape (int n, int p2)
 
-    H : {array-like, matrix} of shape (int n, int n)
+    H : array-like, matrix of shape (int n, int n)
         Matrix Characterizing the (dis)similarity structure of sample space of X1 and X2
 
-    Q1 : {array-like, matrix} of shape (int p1, int p1)
+    Q1 : array-like, matrix of shape (int p1, int p1)
         Matrix Characterizing the (dis)similarity structure of variable space of X1
 
-    Q2 : {array-like, matrix} of shape (int p2, int p1)
+    Q2 : array-like, matrix of shape (int p2, int p1)
         Matrix Characterizing the (dis)similarity structure of variable space of X2
 
     r1: int, the total rank of X1; Defaults to None.
@@ -54,7 +54,7 @@ class igPCA:
         return tuple((rank_std, rank_min, bcv_class.error_mean))
 
     # modification required: h, l
-    def __X1_rank_selection__(self, K=None, method='pst', h=10, l=10, std=True):
+    def X1_rank_selection(self, K=None, method='pst', h=10, l=10, std=True):
         """
         Selects the rank of X1 of r1 is unknown
 
@@ -85,7 +85,7 @@ class igPCA:
         print("rank selected for X1 one-standard deviation rule is " + str(rank_std))
 
     # modification required: h, l
-    def __X2_rank_selection__(self, K=None, method='pst', std=True):
+    def X2_rank_selection(self, K=None, method='pst', std=True):
         """
         Selects the rank of X1 of r1 is unknown
 
@@ -171,38 +171,33 @@ class igPCA:
     def fit(self, r0=None, rank_method='pst', K1=None, K2=None, thres=None, h1=None, l1=None, h2=None, l2=None):
         """
         This function implements the igPCA algo in the followsing steps:
+
         1. Rank selections of X1 and X2 if required
             Parameters
             ----------
             rank_method: str, optional. Rank selection method. Defaults to 'pst'
-            K1, K2: list, optional. Candidates of r1, r2. Defaults to None.
+
+            K1: list, optional. Candidates of r1. Defaults to None.
+
+            K2: list, optional. Candidates of r2. Defaults to None.
+
             h1, h2: int, optional. Number of folds in row under BCV framework. Defaults to 10.
+
             l1, l2: int, optional. Number of folds in row under BCV framework. Defaults to 10.
 
         2. Estimate joint rank by pre-specified or user-specified threshold
             Parameters
             ----------
-            r0: int, optional. Defaults to None.
+            r0 : int, optional. Defaults to None.
 
         3. Estimate the joint componenets
-        4. Estimate the joint componenets
 
-        Returns
-        -------
-        With 
-            X1_hat = U0 D01 V01^T + U11 D11 V11^T = J_1 + A_1
-            X2_hat = U0 D02 V02^T + U12 D12 V12^T = J_1 + A_1
-        Returns class argements:
-            self.X_1_hat, self.X_2_hat
-            self.J1_hat,  self.J2_hat
-            self.U0, self.U11, self.U12
-            self.D01, self.D02, self.D11, self.D12
-            self.V01, self.V02, self.V11, self.V12
+        4. Estimate the joint componenets
         """
         if self.r1 == None:
-            self.__X1_rank_selection__(K=K1, method=rank_method, h=h1, l=l1)
+            self.X1_rank_selection(K=K1, method=rank_method, h=h1, l=l1)
         if self.r2 == None:
-            self.__X2_rank_selection__(K=K2, method=rank_method, h=h2, l=l2)
+            self.X2_rank_selection(K=K2, method=rank_method, h=h2, l=l2)
         U1,  U2, X_1_tilde, X_2_tilde = self.__joint_ingredient__()
         if (r0):
             self.r0 = r0

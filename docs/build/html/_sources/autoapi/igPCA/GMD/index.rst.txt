@@ -1,0 +1,152 @@
+:py:mod:`igPCA.GMD`
+===================
+
+.. py:module:: igPCA.GMD
+
+.. autoapi-nested-parse::
+
+   Sparse Generalized Matrix Decomposition
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   igPCA.GMD.GMD
+
+
+
+
+.. py:class:: GMD(X, H, Q, K=3, max_iter=50, tol=0.0001, lu=0, lv=0)
+
+
+   This class implements the Generalized Matrix Decomposition (GMD) and supports sparse loading and score given by lasso.
+
+   :param X:
+   :type X: {array-like, sparse matrix of shape (int n, int p)}
+   :param H: Matrix Characterizing the (dis)similarity structure of sample space of X
+   :type H: {array-like, matrix} of shape (int n, int n)
+   :param Q: Matrix Characterizing the (dis)similarity structure of variable space of X
+   :type Q: {array-like, matrix} of shape (int p, int p)
+   :param K: Number of components to keep
+   :type K: int, default=3
+   :param max_iter: The maximum number of iterations.
+   :type max_iter: int, default=50
+   :param tol: The tolerance for the optimization: if the updates are smaller than tol, the
+               optimization code checks the dual gap for optimality and continues until it
+               is smaller than tol
+   :type tol: float, default=1e-4
+   :param lu: Constant that multiplies the L1 term with respect to score(U),
+              controlling regularization strength. lu must be a non-negative float i.e. in [0, inf).
+   :type lu: float, default=None
+   :param lv: Constant that multiplies the L1 term with respect to loading(V),
+              controlling regularization strength. lu must be a non-negative float i.e. in [0, inf).
+   :type lv: float, default=None
+
+   .. attribute:: X
+
+
+
+      :type: {array-like, sparse matrix of shape (int n, int p)}
+
+   .. attribute:: H
+
+      Matrix Characterizing the (dis)similarity structure of sample space of X
+
+      :type: {array-like, matrix} of shape (int n, int n)
+
+   .. attribute:: Q
+
+      Matrix Characterizing the (dis)similarity structure of variable space of X
+
+      :type: {array-like, matrix} of shape (int p, int p)
+
+   .. attribute:: K
+
+      Number of components to keep
+
+      :type: int, default=3
+
+   .. attribute:: max_iter
+
+      The maximum number of iterations.
+
+      :type: int, default=50
+
+   .. attribute:: tol
+
+      The tolerance for the optimization: if the updates are smaller than tol, the
+      optimization code checks the dual gap for optimality and continues until it
+      is smaller than tol
+
+      :type: float, default=1e-4
+
+   .. attribute:: lu
+
+      Constant that multiplies the L1 term with respect to score(U),
+      controlling regularization strength. lu must be a non-negative float i.e. in [0, inf).
+
+      :type: float, default=None
+
+   .. attribute:: lv
+
+      Constant that multiplies the L1 term with respect to loading(V),
+      controlling regularization strength. lu must be a non-negative float i.e. in [0, inf).
+
+      :type: float, default=None
+
+   .. attribute:: U
+
+      Estimated GMD score
+
+      :type: {array-like, matrix} of shape (n, K)
+
+   .. attribute:: D
+
+      Estimated GMD value
+
+      :type: {array-like} of shape (K)
+
+   .. attribute:: V
+
+      Estimated GMD loading
+
+      :type: {array-like, matrix} of shape (p, K)
+
+   .. attribute:: X_hat
+
+      Estimated GMD value, it is equivalent to the mean matrix of X when assuming
+      ``X ~ MN_{n,p}(X_hat, H^{-1}, Q^{-1})``
+
+      :type: {array-like, matrix} of shape (n, K)
+
+   .. py:method:: __soft_thresholding__(l, x)
+
+
+   .. py:method:: __compute_A_norm__(A, vec)
+
+
+   .. py:method:: __initialize_uv__(component)
+
+
+   .. py:method:: __compute_uv_vector__()
+
+
+   .. py:method:: __compute_d__()
+
+
+   .. py:method:: __compute_X__()
+
+
+   .. py:method:: __GMD_result__()
+
+
+   .. py:method:: fit()
+
+
+

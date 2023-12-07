@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="Python" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>igPCA.GMD &mdash; igPCA 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=8eae9801"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../readme.html" class="icon icon-home">
+            igPCA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../readme.html">igPCA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../readme.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../igPCA.html">igPCA</a></li>
+      <li class="breadcrumb-item active">igPCA.GMD</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for igPCA.GMD</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Sparse Generalized Matrix Decomposition&quot;&quot;&quot;</span>
+
+<span class="c1"># Authors: Xinyi Xie &lt;xinyix35@uw.edu&gt;</span>
+<span class="c1">#           Jing Ma &lt;jingma@fredhutch.org&gt;</span>
+<span class="c1"># R version: https://github.com/drjingma/GMDecomp</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linalg</span> <span class="k">as</span> <span class="n">LA</span>
+
+
+<div class="viewcode-block" id="GMD">
+<a class="viewcode-back" href="../../autoapi/igPCA/GMD/index.html#igPCA.GMD.GMD">[docs]</a>
+<span class="k">class</span> <span class="nc">GMD</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class implements the Generalized Matrix Decomposition (GMD) and supports sparse loading and score given by lasso.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : {array-like, sparse matrix of shape (int n, int p)}</span>
+
+<span class="sd">    H : {array-like, matrix} of shape (int n, int n)</span>
+<span class="sd">        Matrix Characterizing the (dis)similarity structure of sample space of X</span>
+<span class="sd">    Q : {array-like, matrix} of shape (int p, int p)</span>
+<span class="sd">        Matrix Characterizing the (dis)similarity structure of variable space of X</span>
+<span class="sd">    K : int, default=3</span>
+<span class="sd">        Number of components to keep</span>
+<span class="sd">    max_iter : int, default=50</span>
+<span class="sd">        The maximum number of iterations.</span>
+<span class="sd">    tol : float, default=1e-4</span>
+<span class="sd">        The tolerance for the optimization: if the updates are smaller than tol, the </span>
+<span class="sd">        optimization code checks the dual gap for optimality and continues until it </span>
+<span class="sd">        is smaller than tol</span>
+<span class="sd">    lu : float, default=None</span>
+<span class="sd">        Constant that multiplies the L1 term with respect to score(U), </span>
+<span class="sd">        controlling regularization strength. lu must be a non-negative float i.e. in [0, inf).</span>
+<span class="sd">    lv : float, default=None</span>
+<span class="sd">        Constant that multiplies the L1 term with respect to loading(V), </span>
+<span class="sd">        controlling regularization strength. lu must be a non-negative float i.e. in [0, inf).</span>
+
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : {array-like, sparse matrix of shape (int n, int p)}</span>
+
+<span class="sd">    H : {array-like, matrix} of shape (int n, int n)</span>
+<span class="sd">        Matrix Characterizing the (dis)similarity structure of sample space of X</span>
+<span class="sd">    Q : {array-like, matrix} of shape (int p, int p)</span>
+<span class="sd">        Matrix Characterizing the (dis)similarity structure of variable space of X</span>
+<span class="sd">    K : int, default=3</span>
+<span class="sd">        Number of components to keep</span>
+<span class="sd">    max_iter : int, default=50</span>
+<span class="sd">        The maximum number of iterations.</span>
+<span class="sd">    tol : float, default=1e-4</span>
+<span class="sd">        The tolerance for the optimization: if the updates are smaller than tol, the </span>
+<span class="sd">        optimization code checks the dual gap for optimality and continues until it </span>
+<span class="sd">        is smaller than tol</span>
+<span class="sd">    lu : float, default=None</span>
+<span class="sd">        Constant that multiplies the L1 term with respect to score(U), </span>
+<span class="sd">        controlling regularization strength. lu must be a non-negative float i.e. in [0, inf).</span>
+<span class="sd">    lv : float, default=None</span>
+<span class="sd">        Constant that multiplies the L1 term with respect to loading(V), </span>
+<span class="sd">        controlling regularization strength. lu must be a non-negative float i.e. in [0, inf).</span>
+<span class="sd">    U : {array-like, matrix} of shape (n, K)</span>
+<span class="sd">        Estimated GMD score </span>
+
+<span class="sd">    D : {array-like} of shape (K)</span>
+<span class="sd">        Estimated GMD value </span>
+
+<span class="sd">    V : {array-like, matrix} of shape (p, K)</span>
+<span class="sd">        Estimated GMD loading</span>
+
+<span class="sd">    X_hat : {array-like, matrix} of shape (n, K)</span>
+<span class="sd">        Estimated GMD value, it is equivalent to the mean matrix of X when assuming </span>
+<span class="sd">        ``X ~ MN_{n,p}(X_hat, H^{-1}, Q^{-1})``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">lu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">lv</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+        <span class="c1"># to store the original data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">H</span> <span class="o">=</span> <span class="n">H</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Q</span> <span class="o">=</span> <span class="n">Q</span>
+        <span class="c1"># k is the rank for GMD specified in advanced</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">K</span> <span class="o">=</span> <span class="n">K</span>
+        <span class="c1"># input of penalized parameter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lu</span> <span class="o">=</span> <span class="n">lu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lv</span> <span class="o">=</span> <span class="n">lv</span>
+        <span class="c1"># initialize parameters for iterations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># initialze paramters for controlling iterations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">=</span> <span class="n">max_iter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span>
+        <span class="c1"># initialize parameters for output</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GMD.__soft_thresholding__">
+<a class="viewcode-back" href="../../autoapi/igPCA/GMD/index.html#igPCA.GMD.GMD.__soft_thresholding__">[docs]</a>
+    <span class="k">def</span> <span class="nf">__soft_thresholding__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">l</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GMD.__compute_A_norm__">
+<a class="viewcode-back" href="../../autoapi/igPCA/GMD/index.html#igPCA.GMD.GMD.__compute_A_norm__">[docs]</a>
+    <span class="k">def</span> <span class="nf">__compute_A_norm__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">vec</span><span class="p">):</span>
+        <span class="c1"># A is the matirx specifying the normed-space with size n * p</span>
+        <span class="c1"># vec is a vector with shape p * 1, p is any natural number</span>
+        <span class="c1"># norm is given as (v^t)Av</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">vec</span><span class="p">),</span> <span class="n">A</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">vec</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+
+    <span class="c1"># initialize u and v at each rank $k = 1, ..., K$ so that</span>
+    <span class="c1"># u^T H u &gt;0 and  v^T Q v &gt;0</span>
+<div class="viewcode-block" id="GMD.__initialize_uv__">
+<a class="viewcode-back" href="../../autoapi/igPCA/GMD/index.html#igPCA.GMD.GMD.__initialize_uv__">[docs]</a>
+    <span class="k">def</span> <span class="nf">__initialize_uv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">component</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">[</span><span class="n">component</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">)</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">temp</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">[</span><span class="n">component</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">break</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">component</span> <span class="o">&gt;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">[</span><span class="n">component</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">)</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">temp</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">[</span><span class="n">component</span> <span class="o">+</span> <span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">break</span></div>
+
+
+    <span class="c1"># update u and v for once</span>
+<div class="viewcode-block" id="GMD.__compute_uv_vector__">
+<a class="viewcode-back" href="../../autoapi/igPCA/GMD/index.html#igPCA.GMD.GMD.__compute_uv_vector__">[docs]</a>
+    <span class="k">def</span> <span class="nf">__compute_uv_vector__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cons_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">)</span>
+        <span class="n">cons_v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">)</span>
+        <span class="c1"># compute u</span>
+        <span class="n">u_nscale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__soft_thresholding__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lu</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">cons_u</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">))</span>
+        <span class="n">u_norm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__compute_A_norm__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">,</span> <span class="n">u_nscale</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">u</span> <span class="o">=</span> <span class="p">(</span><span class="n">u_norm</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">u_nscale</span> <span class="o">/</span> <span class="n">u_norm</span>
+        <span class="c1"># compute v</span>
+        <span class="n">v_nscale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__soft_thresholding__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lv</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">cons_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">))</span>
+        <span class="n">v_norm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__compute_A_norm__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">,</span> <span class="n">v_nscale</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">v_norm</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">v_nscale</span> <span class="o">/</span> <span class="n">v_norm</span></div>
+
+
+<div class="viewcode-block" id="GMD.__compute_d__">
+<a class="viewcode-back" href="../../autoapi/igPCA/GMD/index.html#igPCA.GMD.GMD.__compute_d__">[docs]</a>
+    <span class="k">def</span> <span class="nf">__compute_d__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">)</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GMD.__compute_X__">
+<a class="viewcode-back" href="../../autoapi/igPCA/GMD/index.html#igPCA.GMD.GMD.__compute_X__">[docs]</a>
+    <span class="k">def</span> <span class="nf">__compute_X__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">new_mass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">-</span> <span class="n">new_mass</span></div>
+
+
+<div class="viewcode-block" id="GMD.__GMD_result__">
+<a class="viewcode-back" href="../../autoapi/igPCA/GMD/index.html#igPCA.GMD.GMD.__GMD_result__">[docs]</a>
+    <span class="k">def</span> <span class="nf">__GMD_result__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># the result is given as UDV^t</span>
+        <span class="n">component</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">U</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">D</span><span class="p">))</span>
+        <span class="n">fitted_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">fitted_value</span></div>
+
+
+<div class="viewcode-block" id="GMD.fit">
+<a class="viewcode-back" href="../../autoapi/igPCA/GMD/index.html#igPCA.GMD.GMD.fit">[docs]</a>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># iterates over rank</span>
+        <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">):</span>
+            <span class="c1"># update u,v</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__initialize_uv__</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+            <span class="c1"># u_0 and v_0 serves as a placeholder for results in previous iteration</span>
+            <span class="n">u0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">u</span>
+            <span class="n">v0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">num_iter</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="c1"># keep computing till convergence or reach the maximum iterations</span>
+            <span class="k">while</span> <span class="n">error</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">:</span>
+                <span class="c1"># compute u and v</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__compute_uv_vector__</span><span class="p">()</span>
+                <span class="n">num_iter</span> <span class="o">=</span> <span class="n">num_iter</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="c1"># validate whether the algorithm converges</span>
+                <span class="n">error</span> <span class="o">=</span> <span class="n">LA</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span> <span class="o">-</span> <span class="n">u0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">LA</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">-</span> <span class="n">v0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="c1"># prepare for the next iteration</span>
+                <span class="n">u0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">u</span>
+                <span class="n">v0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span>
+                <span class="k">if</span> <span class="n">num_iter</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="c1"># u_k and v_k are determined, update the output matrices U and V</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">U</span><span class="p">[:,</span> <span class="n">component</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">[:,</span> <span class="n">component</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
+            <span class="c1"># update d via the given u and v</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__compute_d__</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">D</span><span class="p">[</span><span class="n">component</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">d</span>
+            <span class="c1"># update X</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__compute_X__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__GMD_result__</span><span class="p">()</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Xinyi Xie.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

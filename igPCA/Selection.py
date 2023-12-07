@@ -1,6 +1,7 @@
 """
 Rank Selection for double-structured Data
 """
+# Authors: Xinyi Xie <xinyix35@uw.edu>
 
 import numpy as np
 from numpy import linalg as LA

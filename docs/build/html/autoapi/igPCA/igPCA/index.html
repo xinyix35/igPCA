@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="Python" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>igPCA.igPCA &mdash; igPCA 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=8eae9801"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../readme.html" class="icon icon-home">
+            igPCA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">igPCA.igPCA</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#igPCA.igPCA.igPCA"><code class="docutils literal notranslate"><span class="pre">igPCA</span></code></a><ul>
+<li><a class="reference internal" href="#igPCA.igPCA.igPCA.__rank_selection__"><code class="docutils literal notranslate"><span class="pre">igPCA.__rank_selection__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.igPCA.igPCA.X1_rank_selection"><code class="docutils literal notranslate"><span class="pre">igPCA.X1_rank_selection()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.igPCA.igPCA.X2_rank_selection"><code class="docutils literal notranslate"><span class="pre">igPCA.X2_rank_selection()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.igPCA.igPCA.__separate_GMD__"><code class="docutils literal notranslate"><span class="pre">igPCA.__separate_GMD__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.igPCA.igPCA.__H_inner_prod__"><code class="docutils literal notranslate"><span class="pre">igPCA.__H_inner_prod__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.igPCA.igPCA.__joint_ingredient__"><code class="docutils literal notranslate"><span class="pre">igPCA.__joint_ingredient__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.igPCA.igPCA.__joint_rank_evaluation__"><code class="docutils literal notranslate"><span class="pre">igPCA.__joint_rank_evaluation__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.igPCA.igPCA.__joint_fit__"><code class="docutils literal notranslate"><span class="pre">igPCA.__joint_fit__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.igPCA.igPCA.__individual_fit__"><code class="docutils literal notranslate"><span class="pre">igPCA.__individual_fit__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.igPCA.igPCA.fit"><code class="docutils literal notranslate"><span class="pre">igPCA.fit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../readme.html">igPCA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../readme.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">igPCA.igPCA</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/igPCA/igPCA/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-igPCA.igPCA">
+<span id="igpca-igpca"></span><h1><a class="reference internal" href="#module-igPCA.igPCA" title="igPCA.igPCA"><code class="xref py py-mod docutils literal notranslate"><span class="pre">igPCA.igPCA</span></code></a><a class="headerlink" href="#module-igPCA.igPCA" title="Link to this heading"></a></h1>
+<p>Integrative Generalized Principle Component Analysis</p>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#igPCA.igPCA.igPCA" title="igPCA.igPCA.igPCA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">igPCA</span></code></a></p></td>
+<td><p>This class implements the Integrative Generalized Principle Component Analysis(igPCS)</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="igPCA.igPCA.igPCA">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">igPCA.igPCA.</span></span><span class="sig-name descname"><span class="pre">igPCA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thres</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/igPCA.html#igPCA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.igPCA.igPCA" title="Link to this definition"></a></dt>
+<dd><p>This class implements the Integrative Generalized Principle Component Analysis(igPCS)
+and supports sparse loading and score given by lasso.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X1</strong> (<em>array-like matrix</em><em> of </em><em>shape</em><em> (</em><em>int n</em><em>, </em><em>int p1</em><em>)</em>) -- </p></li>
+<li><p><strong>X2</strong> (<em>array-like matrix</em><em> of </em><em>shape</em><em> (</em><em>int n</em><em>, </em><em>int p2</em><em>)</em>) -- </p></li>
+<li><p><strong>H</strong> (<em>array-like</em><em>, </em><em>matrix</em><em> of </em><em>shape</em><em> (</em><em>int n</em><em>, </em><em>int n</em><em>)</em>) -- Matrix Characterizing the (dis)similarity structure of sample space of X1 and X2</p></li>
+<li><p><strong>Q1</strong> (<em>array-like</em><em>, </em><em>matrix</em><em> of </em><em>shape</em><em> (</em><em>int p1</em><em>, </em><em>int p1</em><em>)</em>) -- Matrix Characterizing the (dis)similarity structure of variable space of X1</p></li>
+<li><p><strong>Q2</strong> (<em>array-like</em><em>, </em><em>matrix</em><em> of </em><em>shape</em><em> (</em><em>int p2</em><em>, </em><em>int p1</em><em>)</em>) -- Matrix Characterizing the (dis)similarity structure of variable space of X2</p></li>
+<li><p><strong>r1</strong> (<em>int</em><em>, </em><em>the total rank</em><em> of </em><em>X1; Defaults to None.</em>) -- </p></li>
+<li><p><strong>r2</strong> (<em>int</em><em>, </em><em>the total rank</em><em> of </em><em>X2; Defaults to None.</em>) -- </p></li>
+<li><p><strong>thres</strong> (<em>float bewtween</em><em> (</em><em>0</em><em>,</em><em>1</em><em>)</em><em>, </em><em>threshold for select the joint rank</em>) -- Defaults to 0.9.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.igPCA.igPCA.__rank_selection__">
+<span class="sig-name descname"><span class="pre">__rank_selection__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/igPCA.html#igPCA.__rank_selection__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.igPCA.igPCA.__rank_selection__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.igPCA.igPCA.X1_rank_selection">
+<span class="sig-name descname"><span class="pre">X1_rank_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">K</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pst'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/igPCA.html#igPCA.X1_rank_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.igPCA.igPCA.X1_rank_selection" title="Link to this definition"></a></dt>
+<dd><p>Selects the rank of X1 of r1 is unknown</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>(</strong><strong>list</strong> (<em>K</em>) -- </p></li>
+<li><p><strong>optional</strong><strong>)</strong> (<em>Indicating whether select the rank by one-standard deviation rule.</em>) -- </p></li>
+<li><p><strong>(</strong><strong>str</strong> (<em>method</em>) -- </p></li>
+<li><p><strong>optional</strong><strong>)</strong> -- </p></li>
+<li><p><strong>(</strong><strong>int</strong> (<em>l</em>) -- </p></li>
+<li><p><strong>optional</strong><strong>)</strong> -- </p></li>
+<li><p><strong>(</strong><strong>int</strong> -- </p></li>
+<li><p><strong>optional</strong><strong>)</strong> -- </p></li>
+<li><p><strong>(</strong><strong>bool</strong> (<em>std</em>) -- Defaults to True.</p></li>
+<li><p><strong>optional</strong><strong>)</strong> -- Defaults to True.</p></li>
+<li><p><strong>Modifies</strong> -- </p></li>
+<li><p><strong>-------</strong> -- </p></li>
+<li><p><strong>self.r1</strong> -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.igPCA.igPCA.X2_rank_selection">
+<span class="sig-name descname"><span class="pre">X2_rank_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">K</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pst'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/igPCA.html#igPCA.X2_rank_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.igPCA.igPCA.X2_rank_selection" title="Link to this definition"></a></dt>
+<dd><p>Selects the rank of X1 of r1 is unknown</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>(</strong><strong>list</strong> (<em>K</em>) -- </p></li>
+<li><p><strong>optional</strong><strong>)</strong> (<em>Indicating whether select the rank by one-standard deviation rule.</em>) -- </p></li>
+<li><p><strong>(</strong><strong>str</strong> (<em>method</em>) -- </p></li>
+<li><p><strong>optional</strong><strong>)</strong> -- </p></li>
+<li><p><strong>(</strong><strong>int</strong> (<em>l</em>) -- </p></li>
+<li><p><strong>optional</strong><strong>)</strong> -- </p></li>
+<li><p><strong>(</strong><strong>int</strong> -- </p></li>
+<li><p><strong>optional</strong><strong>)</strong> -- </p></li>
+<li><p><strong>(</strong><strong>bool</strong> (<em>std</em>) -- Defaults to True.</p></li>
+<li><p><strong>optional</strong><strong>)</strong> -- Defaults to True.</p></li>
+<li><p><strong>Modifies</strong> -- </p></li>
+<li><p><strong>-------</strong> -- </p></li>
+<li><p><strong>self.r2</strong> -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.igPCA.igPCA.__separate_GMD__">
+<span class="sig-name descname"><span class="pre">__separate_GMD__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/igPCA.html#igPCA.__separate_GMD__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.igPCA.igPCA.__separate_GMD__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.igPCA.igPCA.__H_inner_prod__">
+<span class="sig-name descname"><span class="pre">__H_inner_prod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/igPCA.html#igPCA.__H_inner_prod__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.igPCA.igPCA.__H_inner_prod__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.igPCA.igPCA.__joint_ingredient__">
+<span class="sig-name descname"><span class="pre">__joint_ingredient__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/igPCA.html#igPCA.__joint_ingredient__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.igPCA.igPCA.__joint_ingredient__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.igPCA.igPCA.__joint_rank_evaluation__">
+<span class="sig-name descname"><span class="pre">__joint_rank_evaluation__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">U1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">U2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/igPCA.html#igPCA.__joint_rank_evaluation__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.igPCA.igPCA.__joint_rank_evaluation__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.igPCA.igPCA.__joint_fit__">
+<span class="sig-name descname"><span class="pre">__joint_fit__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">U1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">U2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_1_tilde</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_2_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/igPCA.html#igPCA.__joint_fit__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.igPCA.igPCA.__joint_fit__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.igPCA.igPCA.__individual_fit__">
+<span class="sig-name descname"><span class="pre">__individual_fit__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_1_tilde</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_2_tilde</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">J1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">J2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/igPCA.html#igPCA.__individual_fit__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.igPCA.igPCA.__individual_fit__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.igPCA.igPCA.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pst'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thres</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/igPCA.html#igPCA.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.igPCA.igPCA.fit" title="Link to this definition"></a></dt>
+<dd><p>This function implements the igPCA algo in the followsing steps:</p>
+<ol class="arabic">
+<li><dl>
+<dt>Rank selections of X1 and X2 if required</dt><dd><p>rank_method: str, optional. Rank selection method. Defaults to 'pst'</p>
+<p>K1: list, optional. Candidates of r1. Defaults to None.</p>
+<p>K2: list, optional. Candidates of r2. Defaults to None.</p>
+<p>h1, h2: int, optional. Number of folds in row under BCV framework. Defaults to 10.</p>
+<p>l1, l2: int, optional. Number of folds in row under BCV framework. Defaults to 10.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Estimate joint rank by pre-specified or user-specified threshold</dt><dd><p>r0 : int, optional. Defaults to None.</p>
+</dd>
+</dl>
+</li>
+<li><p>Estimate the joint componenets</p></li>
+<li><p>Estimate the joint componenets</p></li>
+</ol>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Xinyi Xie.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

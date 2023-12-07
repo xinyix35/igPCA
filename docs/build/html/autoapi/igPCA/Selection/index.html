@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="Python" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>igPCA.Selection &mdash; igPCA 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=8eae9801"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../readme.html" class="icon icon-home">
+            igPCA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">igPCA.Selection</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#igPCA.Selection.SelectionMethod"><code class="docutils literal notranslate"><span class="pre">SelectionMethod</span></code></a><ul>
+<li><a class="reference internal" href="#igPCA.Selection.SelectionMethod.__partition__"><code class="docutils literal notranslate"><span class="pre">SelectionMethod.__partition__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.SelectionMethod.__init_data_by_input__"><code class="docutils literal notranslate"><span class="pre">SelectionMethod.__init_data_by_input__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.SelectionMethod.__init_sigma_by_input__"><code class="docutils literal notranslate"><span class="pre">SelectionMethod.__init_sigma_by_input__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.SelectionMethod.__init_phi_by_input__"><code class="docutils literal notranslate"><span class="pre">SelectionMethod.__init_phi_by_input__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.SelectionMethod.__compute_QH_norm__"><code class="docutils literal notranslate"><span class="pre">SelectionMethod.__compute_QH_norm__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.SelectionMethod.__mse_evaluation__"><code class="docutils literal notranslate"><span class="pre">SelectionMethod.__mse_evaluation__()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#igPCA.Selection.PosteriorMean"><code class="docutils literal notranslate"><span class="pre">PosteriorMean</span></code></a><ul>
+<li><a class="reference internal" href="#igPCA.Selection.PosteriorMean.__fit_once__"><code class="docutils literal notranslate"><span class="pre">PosteriorMean.__fit_once__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.PosteriorMean.forward_fixed_rank"><code class="docutils literal notranslate"><span class="pre">PosteriorMean.forward_fixed_rank()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.PosteriorMean.__compute_conditional_mean__"><code class="docutils literal notranslate"><span class="pre">PosteriorMean.__compute_conditional_mean__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.PosteriorMean.error_k"><code class="docutils literal notranslate"><span class="pre">PosteriorMean.error_k()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#igPCA.Selection.GMDRegression"><code class="docutils literal notranslate"><span class="pre">GMDRegression</span></code></a><ul>
+<li><a class="reference internal" href="#igPCA.Selection.GMDRegression.__regression_fixed_rank__"><code class="docutils literal notranslate"><span class="pre">GMDRegression.__regression_fixed_rank__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.GMDRegression.__estimate_A__"><code class="docutils literal notranslate"><span class="pre">GMDRegression.__estimate_A__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.GMDRegression.error_k"><code class="docutils literal notranslate"><span class="pre">GMDRegression.error_k()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#igPCA.Selection.spilt"><code class="docutils literal notranslate"><span class="pre">spilt</span></code></a><ul>
+<li><a class="reference internal" href="#igPCA.Selection.spilt.__row_par_index__"><code class="docutils literal notranslate"><span class="pre">spilt.__row_par_index__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.spilt.__col_par_index__"><code class="docutils literal notranslate"><span class="pre">spilt.__col_par_index__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.spilt.forward"><code class="docutils literal notranslate"><span class="pre">spilt.forward()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.spilt.__A_index__"><code class="docutils literal notranslate"><span class="pre">spilt.__A_index__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.spilt.__B_index__"><code class="docutils literal notranslate"><span class="pre">spilt.__B_index__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.spilt.__C_index__"><code class="docutils literal notranslate"><span class="pre">spilt.__C_index__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.spilt.__D_index__"><code class="docutils literal notranslate"><span class="pre">spilt.__D_index__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.spilt.__sigma_11_index__"><code class="docutils literal notranslate"><span class="pre">spilt.__sigma_11_index__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.spilt.__sigma_22_index__"><code class="docutils literal notranslate"><span class="pre">spilt.__sigma_22_index__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.spilt.__sigma_12_index__"><code class="docutils literal notranslate"><span class="pre">spilt.__sigma_12_index__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.spilt.__sigma_21_index__"><code class="docutils literal notranslate"><span class="pre">spilt.__sigma_21_index__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.spilt.__phi_11_index__"><code class="docutils literal notranslate"><span class="pre">spilt.__phi_11_index__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.spilt.__phi_22_index__"><code class="docutils literal notranslate"><span class="pre">spilt.__phi_22_index__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.spilt.__phi_12_index__"><code class="docutils literal notranslate"><span class="pre">spilt.__phi_12_index__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.spilt.__phi_21_index__"><code class="docutils literal notranslate"><span class="pre">spilt.__phi_21_index__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.spilt.split_data"><code class="docutils literal notranslate"><span class="pre">spilt.split_data()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.spilt.split_sigma"><code class="docutils literal notranslate"><span class="pre">spilt.split_sigma()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.spilt.split_phi"><code class="docutils literal notranslate"><span class="pre">spilt.split_phi()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#igPCA.Selection.BiCrossValidation"><code class="docutils literal notranslate"><span class="pre">BiCrossValidation</span></code></a><ul>
+<li><a class="reference internal" href="#igPCA.Selection.BiCrossValidation._init_model_"><code class="docutils literal notranslate"><span class="pre">BiCrossValidation._init_model_()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.BiCrossValidation.fit"><code class="docutils literal notranslate"><span class="pre">BiCrossValidation.fit()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.Selection.BiCrossValidation.rank_selection"><code class="docutils literal notranslate"><span class="pre">BiCrossValidation.rank_selection()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../readme.html">igPCA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../readme.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">igPCA.Selection</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/igPCA/Selection/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-igPCA.Selection">
+<span id="igpca-selection"></span><h1><a class="reference internal" href="#module-igPCA.Selection" title="igPCA.Selection"><code class="xref py py-mod docutils literal notranslate"><span class="pre">igPCA.Selection</span></code></a><a class="headerlink" href="#module-igPCA.Selection" title="Link to this heading"></a></h1>
+<p>Rank Selection for double-structured Data</p>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#igPCA.Selection.SelectionMethod" title="igPCA.Selection.SelectionMethod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SelectionMethod</span></code></a></p></td>
+<td><p>This class is the parent of the classes of two rank selection models, that is,</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#igPCA.Selection.PosteriorMean" title="igPCA.Selection.PosteriorMean"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PosteriorMean</span></code></a></p></td>
+<td><p>This class computes the error of a pre-specified partition of data</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#igPCA.Selection.GMDRegression" title="igPCA.Selection.GMDRegression"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GMDRegression</span></code></a></p></td>
+<td><p>This class computes the error of a pre-specified partition of data</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#igPCA.Selection.spilt" title="igPCA.Selection.spilt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spilt</span></code></a></p></td>
+<td><p>This class motivates the data spilting process used in Bi-Cross Validation (bcv.py)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#igPCA.Selection.BiCrossValidation" title="igPCA.Selection.BiCrossValidation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BiCrossValidation</span></code></a></p></td>
+<td><p>BCV is the class to carry out the bi-cross validation process</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="igPCA.Selection.SelectionMethod">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">igPCA.Selection.</span></span><span class="sig-name descname"><span class="pre">SelectionMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">by_insert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sigma_11</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sigma_12</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sigma_21</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sigma_22</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Phi_11</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Phi_12</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Phi_21</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Phi_22</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Phi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#SelectionMethod"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.SelectionMethod" title="Link to this definition"></a></dt>
+<dd><p>This class is the parent of the classes of two rank selection models, that is,
+GMD regression model and Posterior Mean Model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>by_insert</strong> (<em>boolean</em><em>, </em><em>indicating how the class is initialized</em>) -- if True, then all the components are inserted;
+else, input the following paramters to initialize</p></li>
+<li><p><strong>X</strong> (<em>{array-like</em><em>, </em><em>sparse matrix}</em><em> of </em><em>shape</em><em> (</em><em>int n</em><em>, </em><em>int p</em><em>)</em>) -- </p></li>
+<li><p><strong>Sigma</strong> (<em>{array-like</em><em>, </em><em>sparse matrix}</em><em> of </em><em>shape</em><em> (</em><em>int n</em><em>, </em><em>int n</em><em>)</em>) -- </p></li>
+<li><p><strong>Phi</strong> (<em>{array-like</em><em>, </em><em>sparse matrix}</em><em> of </em><em>shape</em><em> (</em><em>int p</em><em>, </em><em>int p</em><em>)</em>) -- </p></li>
+<li><p><strong>m</strong> (<em>int</em><em>, </em><em>number</em><em> of </em><em>rows</em><em> of </em><em>the targeted block;</em>) -- if greater than 0, each blocks are partitioned when initializing
+otherwise, each block need to be inserted</p></li>
+<li><p><strong>t</strong> (<em>int</em><em>, </em><em>number</em><em> of </em><em>columns</em><em> of </em><em>the targeted block;</em>) -- if greater than 0, each blocks are partitioned when initializing
+otherwise, each block need to be inserted</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.SelectionMethod.__partition__">
+<span class="sig-name descname"><span class="pre">__partition__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nrow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncol</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#SelectionMethod.__partition__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.SelectionMethod.__partition__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.SelectionMethod.__init_data_by_input__">
+<span class="sig-name descname"><span class="pre">__init_data_by_input__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#SelectionMethod.__init_data_by_input__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.SelectionMethod.__init_data_by_input__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.SelectionMethod.__init_sigma_by_input__">
+<span class="sig-name descname"><span class="pre">__init_sigma_by_input__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#SelectionMethod.__init_sigma_by_input__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.SelectionMethod.__init_sigma_by_input__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.SelectionMethod.__init_phi_by_input__">
+<span class="sig-name descname"><span class="pre">__init_phi_by_input__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#SelectionMethod.__init_phi_by_input__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.SelectionMethod.__init_phi_by_input__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.SelectionMethod.__compute_QH_norm__">
+<span class="sig-name descname"><span class="pre">__compute_QH_norm__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#SelectionMethod.__compute_QH_norm__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.SelectionMethod.__compute_QH_norm__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.SelectionMethod.__mse_evaluation__">
+<span class="sig-name descname"><span class="pre">__mse_evaluation__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">est_A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#SelectionMethod.__mse_evaluation__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.SelectionMethod.__mse_evaluation__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="igPCA.Selection.PosteriorMean">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">igPCA.Selection.</span></span><span class="sig-name descname"><span class="pre">PosteriorMean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">by_insert</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sigma_11</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sigma_12</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sigma_21</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sigma_22</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Phi_11</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Phi_12</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Phi_21</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Phi_22</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Phi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#PosteriorMean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.PosteriorMean" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#igPCA.Selection.SelectionMethod" title="igPCA.Selection.SelectionMethod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SelectionMethod</span></code></a></p>
+<p>This class computes the error of a pre-specified partition of data
+at any rank k, under the Posterior Mean Model</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.PosteriorMean.__fit_once__">
+<span class="sig-name descname"><span class="pre">__fit_once__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#PosteriorMean.__fit_once__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.PosteriorMean.__fit_once__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.PosteriorMean.forward_fixed_rank">
+<span class="sig-name descname"><span class="pre">forward_fixed_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#PosteriorMean.forward_fixed_rank"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.PosteriorMean.forward_fixed_rank" title="Link to this definition"></a></dt>
+<dd><p>Apply GMD to B, C, D to obtained estmated means, then estimate
+M_A by self-consistency theorem</p>
+<section id="paramater">
+<h4>Paramater<a class="headerlink" href="#paramater" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>k: int, must be greater than 0</dt><dd><p>the specified rank that we computes the error</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Etsimated means of M_A, M_B, M_C, and M_D</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.PosteriorMean.__compute_conditional_mean__">
+<span class="sig-name descname"><span class="pre">__compute_conditional_mean__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#PosteriorMean.__compute_conditional_mean__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.PosteriorMean.__compute_conditional_mean__" title="Link to this definition"></a></dt>
+<dd><p>Compute the conditional mean of A by the
+estimated means for a fixed rank k</p>
+<section id="id1">
+<h4>Paramater<a class="headerlink" href="#id1" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>k: int, must be greater than 0</dt><dd><p>the specified rank that we computes the error</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Posterior Mean of M_A</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.PosteriorMean.error_k">
+<span class="sig-name descname"><span class="pre">error_k</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#PosteriorMean.error_k"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.PosteriorMean.error_k" title="Link to this definition"></a></dt>
+<dd><section id="id2">
+<h4>Paramater<a class="headerlink" href="#id2" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>k: int, must be greater than 0</dt><dd><p>the specified rank that we computes the error</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>float</strong></p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>the error of estimation at rank k</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="igPCA.Selection.GMDRegression">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">igPCA.Selection.</span></span><span class="sig-name descname"><span class="pre">GMDRegression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">by_insert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sigma_11</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sigma_12</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sigma_21</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sigma_22</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Phi_11</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Phi_12</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Phi_21</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Phi_22</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Phi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#GMDRegression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.GMDRegression" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#igPCA.Selection.SelectionMethod" title="igPCA.Selection.SelectionMethod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SelectionMethod</span></code></a></p>
+<p>This class computes the error of a pre-specified partition of data
+at any rank k, under the GMD Regression Model</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.GMDRegression.__regression_fixed_rank__">
+<span class="sig-name descname"><span class="pre">__regression_fixed_rank__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#GMDRegression.__regression_fixed_rank__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.GMDRegression.__regression_fixed_rank__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.GMDRegression.__estimate_A__">
+<span class="sig-name descname"><span class="pre">__estimate_A__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">beta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#GMDRegression.__estimate_A__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.GMDRegression.__estimate_A__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.GMDRegression.error_k">
+<span class="sig-name descname"><span class="pre">error_k</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#GMDRegression.error_k"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.GMDRegression.error_k" title="Link to this definition"></a></dt>
+<dd><section id="id3">
+<h4>Paramater<a class="headerlink" href="#id3" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>k: int, must be greater than 0</dt><dd><p>the specified rank that we computes the error</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>float</strong></p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>the error of estimation at rank k</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">igPCA.Selection.</span></span><span class="sig-name descname"><span class="pre">spilt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt" title="Link to this definition"></a></dt>
+<dd><p>This class motivates the data spilting process used in Bi-Cross Validation (bcv.py)
+by the following steps:
+1. Generating the partitions of rows and column with particular matrix size(n,p) and fold-size(h,l)
+2. Reorganize the (i,j)-block of matrix to the top left corner
+3. Generate the corresponding row/column indices for matrices after reorganizing</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em><em>, </em><em>nodefault value</em><em>, </em><em>sample size</em><em> of </em><em>the original data</em>) -- </p></li>
+<li><p><strong>p</strong> (<em>int</em><em>, </em><em>no default value</em><em>, </em><em>number</em><em> of </em><em>covariates</em><em> of </em><em>the original data</em>) -- </p></li>
+<li><p><strong>h</strong> (<em>int</em><em>, </em><em>default = 5</em><em>, </em><em>number</em><em> of </em><em>partition</em><em>(</em><em>fold</em><em>) </em><em>in sample</em>) -- </p></li>
+<li><p><strong>l</strong> (<em>int</em><em>, </em><em>default = 5</em><em>, </em><em>number</em><em> of </em><em>partition</em><em>(</em><em>fold</em><em>) </em><em>in covariate</em>) -- </p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>1. first define a split object, and process the data
+sp = _spilt(n,p,h,l)
+sp.forward()
+2. To obatin the blocks of data X when the (i,j)-block is moved to the top left corner
+by calling the function split_data() in the class:
+A, B, C, D = sp.split_data(X, i, j)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt.__row_par_index__">
+<span class="sig-name descname"><span class="pre">__row_par_index__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt.__row_par_index__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt.__row_par_index__" title="Link to this definition"></a></dt>
+<dd><p>Obatin the size of each partition (in row), and thus obatin
+the next one index of each partition</p>
+<p class="rubric">Example</p>
+<p>row = [i for i in range(11)]
+h = 3
+row_size = [4,4,3]
+row_index = [0,4,8,11]</p>
+<p>To obtain the first partition, we have row[0:4] = [0,1,2,3]
+To obatin the second partition, we have row[4:8] = [4,5,6,7]
+To obatin the third partition, we have row[8:11] = [8,9,10]</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt.__col_par_index__">
+<span class="sig-name descname"><span class="pre">__col_par_index__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt.__col_par_index__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt.__col_par_index__" title="Link to this definition"></a></dt>
+<dd><p>generate the size of each partition (in column), and thus obatin
+the first index of each partition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt.forward" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt.__A_index__">
+<span class="sig-name descname"><span class="pre">__A_index__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt.__A_index__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt.__A_index__" title="Link to this definition"></a></dt>
+<dd><section id="id4">
+<h4>Paramater<a class="headerlink" href="#id4" title="Link to this heading"></a></h4>
+<p>i: int, index of row partition, starts from 0
+j: int, index of row partition, starts from 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the row indices and column indices of the (i,j)-block of data</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt.__B_index__">
+<span class="sig-name descname"><span class="pre">__B_index__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt.__B_index__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt.__B_index__" title="Link to this definition"></a></dt>
+<dd><section id="id5">
+<h4>Paramater<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
+<p>i: int, index of row partition, starts from 0
+j: int, index of row partition, starts from 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the row indices and column indices of the (i,j)-block of data</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt.__C_index__">
+<span class="sig-name descname"><span class="pre">__C_index__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt.__C_index__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt.__C_index__" title="Link to this definition"></a></dt>
+<dd><section id="id6">
+<h4>Paramater<a class="headerlink" href="#id6" title="Link to this heading"></a></h4>
+<p>i: int, index of row partition, starts from 0
+j: int, index of row partition, starts from 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the row indices and column indices of the (i,j)-block of data</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt.__D_index__">
+<span class="sig-name descname"><span class="pre">__D_index__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt.__D_index__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt.__D_index__" title="Link to this definition"></a></dt>
+<dd><section id="id7">
+<h4>Paramater<a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
+<p>i: int, index of row partition, starts from 0
+j: int, index of row partition, starts from 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the row indices and column indices of the (i,j)-block of data</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt.__sigma_11_index__">
+<span class="sig-name descname"><span class="pre">__sigma_11_index__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt.__sigma_11_index__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt.__sigma_11_index__" title="Link to this definition"></a></dt>
+<dd><section id="id8">
+<h4>Paramater<a class="headerlink" href="#id8" title="Link to this heading"></a></h4>
+<p>i: int, index of row partition, starts from 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the index list of the row covariance matrix for (i,*)-block</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt.__sigma_22_index__">
+<span class="sig-name descname"><span class="pre">__sigma_22_index__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt.__sigma_22_index__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt.__sigma_22_index__" title="Link to this definition"></a></dt>
+<dd><section id="id9">
+<h4>Paramater<a class="headerlink" href="#id9" title="Link to this heading"></a></h4>
+<p>i: int, index of row partition, starts from 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the index list of the row covariance matrix for (i,*)-block</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt.__sigma_12_index__">
+<span class="sig-name descname"><span class="pre">__sigma_12_index__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt.__sigma_12_index__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt.__sigma_12_index__" title="Link to this definition"></a></dt>
+<dd><section id="id10">
+<h4>Paramater<a class="headerlink" href="#id10" title="Link to this heading"></a></h4>
+<p>i: int, index of row partition, starts from 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><em>tthe row indices and column indices for the row covariance matrix between</em></p></li>
+<li><p><em>(i,</em>)-block and (i,*)-block*</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt.__sigma_21_index__">
+<span class="sig-name descname"><span class="pre">__sigma_21_index__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt.__sigma_21_index__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt.__sigma_21_index__" title="Link to this definition"></a></dt>
+<dd><section id="id11">
+<h4>Paramater<a class="headerlink" href="#id11" title="Link to this heading"></a></h4>
+<p>i: int, index of row partition, starts from 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><em>tthe row indices and column indices for the row covariance matrix between</em></p></li>
+<li><p><em>(i,</em>)-block and (i,*)-block*</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt.__phi_11_index__">
+<span class="sig-name descname"><span class="pre">__phi_11_index__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt.__phi_11_index__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt.__phi_11_index__" title="Link to this definition"></a></dt>
+<dd><section id="id12">
+<h4>Paramater<a class="headerlink" href="#id12" title="Link to this heading"></a></h4>
+<p>j: int, index of column partition, starts from 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the index list of the row covariance matrix for (<a href="#id13"><span class="problematic" id="id14">*</span></a>,j)-block</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt.__phi_22_index__">
+<span class="sig-name descname"><span class="pre">__phi_22_index__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt.__phi_22_index__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt.__phi_22_index__" title="Link to this definition"></a></dt>
+<dd><section id="id15">
+<h4>Paramater<a class="headerlink" href="#id15" title="Link to this heading"></a></h4>
+<p>j: int, index of column partition, starts from 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the index list of the row covariance matrix for (<a href="#id16"><span class="problematic" id="id17">*</span></a>,j)-block</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt.__phi_12_index__">
+<span class="sig-name descname"><span class="pre">__phi_12_index__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt.__phi_12_index__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt.__phi_12_index__" title="Link to this definition"></a></dt>
+<dd><section id="id18">
+<h4>Paramater<a class="headerlink" href="#id18" title="Link to this heading"></a></h4>
+<p>i: int, index of row partition, starts from 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><em>tthe row indices and column indices for the column covariance matrix between</em></p></li>
+<li><p><em>(</em>,j)-block and (<em>,j)-block</em></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt.__phi_21_index__">
+<span class="sig-name descname"><span class="pre">__phi_21_index__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt.__phi_21_index__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt.__phi_21_index__" title="Link to this definition"></a></dt>
+<dd><section id="id19">
+<h4>Paramater<a class="headerlink" href="#id19" title="Link to this heading"></a></h4>
+<p>i: int, index of row partition, starts from 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><em>tthe row indices and column indices for the column covariance matrix between</em></p></li>
+<li><p><em>(</em>,j)-block and (<em>,j)-block</em></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt.split_data">
+<span class="sig-name descname"><span class="pre">split_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt.split_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt.split_data" title="Link to this definition"></a></dt>
+<dd><section id="id20">
+<h4>Paramater<a class="headerlink" href="#id20" title="Link to this heading"></a></h4>
+<p>X : {array-like, sparse matrix} of shape (int n, int p)</p>
+<p>i: int, index of row partition, starts from 0</p>
+<p>j: int, index of column partition, starts from 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of the four new blocks when (i,j)-block being the targeted partition</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt.split_sigma">
+<span class="sig-name descname"><span class="pre">split_sigma</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt.split_sigma"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt.split_sigma" title="Link to this definition"></a></dt>
+<dd><section id="id21">
+<h4>Paramater<a class="headerlink" href="#id21" title="Link to this heading"></a></h4>
+<p>Sigma : {array-like, sparse matrix} of shape (int n, int n)</p>
+<p>i: int, index of row partition, starts from 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of the four row covariance matrices when (i,j)-block being the targeted partition</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.spilt.split_phi">
+<span class="sig-name descname"><span class="pre">split_phi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#spilt.split_phi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.spilt.split_phi" title="Link to this definition"></a></dt>
+<dd><section id="id22">
+<h4>Paramater<a class="headerlink" href="#id22" title="Link to this heading"></a></h4>
+<p>Phi : {array-like, sparse matrix} of shape (int p, int p)</p>
+<p>j: int, index of column partition, starts from 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of the four column covariance matrices when (i,j)-block being the targeted partition</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="igPCA.Selection.BiCrossValidation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">igPCA.Selection.</span></span><span class="sig-name descname"><span class="pre">BiCrossValidation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pst'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#BiCrossValidation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.BiCrossValidation" title="Link to this definition"></a></dt>
+<dd><p>BCV is the class to carry out the bi-cross validation process</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>{array-like</em><em>, </em><em>sparse matrix}</em><em> of </em><em>shape</em><em> (</em><em>int n</em><em>, </em><em>int p</em><em>)</em>) -- </p></li>
+<li><p><strong>Sigma</strong> (<em>{array-like</em><em>, </em><em>sparse matrix}</em><em> of </em><em>shape</em><em> (</em><em>int n</em><em>, </em><em>int n</em><em>)</em>) -- </p></li>
+<li><p><strong>Phi</strong> (<em>{array-like</em><em>, </em><em>sparse matrix}</em><em> of </em><em>shape</em><em> (</em><em>int p</em><em>, </em><em>int p</em><em>)</em>) -- </p></li>
+<li><p><strong>h</strong> (<em>int</em><em>, </em><em>default = 5</em><em>, </em><em>number</em><em> of </em><em>partition</em><em>(</em><em>fold</em><em>) </em><em>in sample</em>) -- </p></li>
+<li><p><strong>l</strong> (<em>int</em><em>, </em><em>default = 5</em><em>, </em><em>number</em><em> of </em><em>partition</em><em>(</em><em>fold</em><em>) </em><em>in covariate</em>) -- </p></li>
+<li><p><strong>K</strong> (<em>{list</em><em>(</em><em>int</em><em>)</em><em>, </em><em>int}</em><em>, </em><em>candidiates for the rank</em><em> of </em><em>tiplet</em><em> (</em><em>X</em><em>, </em><em>H</em><em>, </em><em>Q</em><em>)</em>) -- If K is an integer, the candidates will be [1, 2, ....K]</p></li>
+<li><p><strong>method</strong> (<em>str in {'pst'</em><em>, </em><em>'reg'}</em><em>, </em><em>default = 'pst'</em>) -- </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.BiCrossValidation._init_model_">
+<span class="sig-name descname"><span class="pre">_init_model_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#BiCrossValidation._init_model_"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.BiCrossValidation._init_model_" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.BiCrossValidation.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#BiCrossValidation.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.BiCrossValidation.fit" title="Link to this definition"></a></dt>
+<dd><p>Fit the Rank Selection model with different rank for all the h*l folds,
+and store the result in an array self.error_mean:</p>
+<blockquote>
+<div><p>store mean error for every fold, with $K$ different values corresponding
+to different ranks in K(list)</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.Selection.BiCrossValidation.rank_selection">
+<span class="sig-name descname"><span class="pre">rank_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/Selection.html#BiCrossValidation.rank_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.Selection.BiCrossValidation.rank_selection" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ranks by both minimum error as well as one-stanard error rule</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Xinyi Xie.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

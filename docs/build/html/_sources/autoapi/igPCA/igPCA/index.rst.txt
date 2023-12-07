@@ -1,0 +1,154 @@
+:py:mod:`igPCA.igPCA`
+=====================
+
+.. py:module:: igPCA.igPCA
+
+.. autoapi-nested-parse::
+
+   Integrative Generalized Principle Component Analysis
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   igPCA.igPCA.igPCA
+
+
+
+
+.. py:class:: igPCA(X1, X2, H, Q1, Q2, r1=None, r2=None, thres=0.9)
+
+
+   This class implements the Integrative Generalized Principle Component Analysis(igPCS)
+   and supports sparse loading and score given by lasso.
+
+   :param X1:
+   :type X1: array-like matrix of shape (int n, int p1)
+   :param X2:
+   :type X2: array-like matrix of shape (int n, int p2)
+   :param H: Matrix Characterizing the (dis)similarity structure of sample space of X1 and X2
+   :type H: array-like, matrix of shape (int n, int n)
+   :param Q1: Matrix Characterizing the (dis)similarity structure of variable space of X1
+   :type Q1: array-like, matrix of shape (int p1, int p1)
+   :param Q2: Matrix Characterizing the (dis)similarity structure of variable space of X2
+   :type Q2: array-like, matrix of shape (int p2, int p1)
+   :param r1:
+   :type r1: int, the total rank of X1; Defaults to None.
+   :param r2:
+   :type r2: int, the total rank of X2; Defaults to None.
+   :param thres: Defaults to 0.9.
+   :type thres: float bewtween (0,1), threshold for select the joint rank
+
+   .. py:method:: __rank_selection__(X, sigma, phi, K, h, l, method)
+
+
+   .. py:method:: X1_rank_selection(K=None, method='pst', h=10, l=10, std=True)
+
+      Selects the rank of X1 of r1 is unknown
+
+      :param K (list:
+      :type K (list: candidates of r1. Defaults to None.
+      :param optional):
+      :type optional): candidates of r1. Defaults to None.
+      :param method (str:
+      :type method (str: Rank selection Method. Defaults to 'pst'.
+      :param optional):
+      :type optional): Rank selection Method. Defaults to 'pst'.
+      :param h (int:
+      :type h (int: Number of folds in row under BCV framework. Defaults to 10.
+      :param optional):
+      :type optional): Number of folds in row under BCV framework. Defaults to 10.
+      :param l (int:
+      :type l (int: Number of folds in row under BCV framework. Defaults to 10.
+      :param optional):
+      :type optional): Number of folds in row under BCV framework. Defaults to 10.
+      :param std (bool: Defaults to True.
+      :type std (bool: Indicating whether select the rank by one-standard deviation rule.
+      :param optional): Defaults to True.
+      :type optional): Indicating whether select the rank by one-standard deviation rule.
+      :param Modifies:
+      :param -------:
+      :param self.r1:
+
+
+   .. py:method:: X2_rank_selection(K=None, method='pst', std=True)
+
+      Selects the rank of X1 of r1 is unknown
+
+      :param K (list:
+      :type K (list: candidates of r2. Defaults to None.
+      :param optional):
+      :type optional): candidates of r2. Defaults to None.
+      :param method (str:
+      :type method (str: Rank selection Method. Defaults to 'pst'.
+      :param optional):
+      :type optional): Rank selection Method. Defaults to 'pst'.
+      :param h (int:
+      :type h (int: Number of folds in row under BCV framework. Defaults to 10.
+      :param optional):
+      :type optional): Number of folds in row under BCV framework. Defaults to 10.
+      :param l (int:
+      :type l (int: Number of folds in row under BCV framework. Defaults to 10.
+      :param optional):
+      :type optional): Number of folds in row under BCV framework. Defaults to 10.
+      :param std (bool: Defaults to True.
+      :type std (bool: Indicating whether select the rank by one-standard deviation rule.
+      :param optional): Defaults to True.
+      :type optional): Indicating whether select the rank by one-standard deviation rule.
+      :param Modifies:
+      :param -------:
+      :param self.r2:
+
+
+   .. py:method:: __separate_GMD__(X, H, Q, rank)
+
+
+   .. py:method:: __H_inner_prod__(u, v)
+
+
+   .. py:method:: __joint_ingredient__()
+
+
+   .. py:method:: __joint_rank_evaluation__(U1, U2, threshold=None)
+
+
+   .. py:method:: __joint_fit__(U1, U2, X_1_tilde, X_2_tilde)
+
+
+   .. py:method:: __individual_fit__(X_1_tilde, X_2_tilde, J1, J2)
+
+
+   .. py:method:: fit(r0=None, rank_method='pst', K1=None, K2=None, thres=None, h1=None, l1=None, h2=None, l2=None)
+
+      This function implements the igPCA algo in the followsing steps:
+
+      1. Rank selections of X1 and X2 if required
+          Parameters
+          ----------
+          rank_method: str, optional. Rank selection method. Defaults to 'pst'
+
+          K1: list, optional. Candidates of r1. Defaults to None.
+
+          K2: list, optional. Candidates of r2. Defaults to None.
+
+          h1, h2: int, optional. Number of folds in row under BCV framework. Defaults to 10.
+
+          l1, l2: int, optional. Number of folds in row under BCV framework. Defaults to 10.
+
+      2. Estimate joint rank by pre-specified or user-specified threshold
+          Parameters
+          ----------
+          r0 : int, optional. Defaults to None.
+
+      3. Estimate the joint componenets
+
+      4. Estimate the joint componenets
+
+
+

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="Python" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>igPCA.GMD &mdash; igPCA 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=8eae9801"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../readme.html" class="icon icon-home">
+            igPCA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">igPCA.GMD</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#igPCA.GMD.GMD"><code class="docutils literal notranslate"><span class="pre">GMD</span></code></a><ul>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.X"><code class="docutils literal notranslate"><span class="pre">GMD.X</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.H"><code class="docutils literal notranslate"><span class="pre">GMD.H</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.Q"><code class="docutils literal notranslate"><span class="pre">GMD.Q</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.K"><code class="docutils literal notranslate"><span class="pre">GMD.K</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.max_iter"><code class="docutils literal notranslate"><span class="pre">GMD.max_iter</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.tol"><code class="docutils literal notranslate"><span class="pre">GMD.tol</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.lu"><code class="docutils literal notranslate"><span class="pre">GMD.lu</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.lv"><code class="docutils literal notranslate"><span class="pre">GMD.lv</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.U"><code class="docutils literal notranslate"><span class="pre">GMD.U</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.D"><code class="docutils literal notranslate"><span class="pre">GMD.D</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.V"><code class="docutils literal notranslate"><span class="pre">GMD.V</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.X_hat"><code class="docutils literal notranslate"><span class="pre">GMD.X_hat</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.__soft_thresholding__"><code class="docutils literal notranslate"><span class="pre">GMD.__soft_thresholding__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.__compute_A_norm__"><code class="docutils literal notranslate"><span class="pre">GMD.__compute_A_norm__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.__initialize_uv__"><code class="docutils literal notranslate"><span class="pre">GMD.__initialize_uv__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.__compute_uv_vector__"><code class="docutils literal notranslate"><span class="pre">GMD.__compute_uv_vector__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.__compute_d__"><code class="docutils literal notranslate"><span class="pre">GMD.__compute_d__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.__compute_X__"><code class="docutils literal notranslate"><span class="pre">GMD.__compute_X__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.__GMD_result__"><code class="docutils literal notranslate"><span class="pre">GMD.__GMD_result__()</span></code></a></li>
+<li><a class="reference internal" href="#igPCA.GMD.GMD.fit"><code class="docutils literal notranslate"><span class="pre">GMD.fit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../readme.html">igPCA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../readme.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">igPCA.GMD</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/igPCA/GMD/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-igPCA.GMD">
+<span id="igpca-gmd"></span><h1><a class="reference internal" href="#module-igPCA.GMD" title="igPCA.GMD"><code class="xref py py-mod docutils literal notranslate"><span class="pre">igPCA.GMD</span></code></a><a class="headerlink" href="#module-igPCA.GMD" title="Link to this heading"></a></h1>
+<p>Sparse Generalized Matrix Decomposition</p>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#igPCA.GMD.GMD" title="igPCA.GMD.GMD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GMD</span></code></a></p></td>
+<td><p>This class implements the Generalized Matrix Decomposition (GMD) and supports sparse loading and score given by lasso.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">igPCA.GMD.</span></span><span class="sig-name descname"><span class="pre">GMD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/GMD.html#GMD"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.GMD.GMD" title="Link to this definition"></a></dt>
+<dd><p>This class implements the Generalized Matrix Decomposition (GMD) and supports sparse loading and score given by lasso.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>{array-like</em><em>, </em><em>sparse matrix</em><em> of </em><em>shape</em><em> (</em><em>int n</em><em>, </em><em>int p</em><em>)</em><em>}</em>) -- </p></li>
+<li><p><strong>H</strong> (<em>{array-like</em><em>, </em><em>matrix}</em><em> of </em><em>shape</em><em> (</em><em>int n</em><em>, </em><em>int n</em><em>)</em>) -- Matrix Characterizing the (dis)similarity structure of sample space of X</p></li>
+<li><p><strong>Q</strong> (<em>{array-like</em><em>, </em><em>matrix}</em><em> of </em><em>shape</em><em> (</em><em>int p</em><em>, </em><em>int p</em><em>)</em>) -- Matrix Characterizing the (dis)similarity structure of variable space of X</p></li>
+<li><p><strong>K</strong> (<em>int</em><em>, </em><em>default=3</em>) -- Number of components to keep</p></li>
+<li><p><strong>max_iter</strong> (<em>int</em><em>, </em><em>default=50</em>) -- The maximum number of iterations.</p></li>
+<li><p><strong>tol</strong> (<em>float</em><em>, </em><em>default=1e-4</em>) -- The tolerance for the optimization: if the updates are smaller than tol, the
+optimization code checks the dual gap for optimality and continues until it
+is smaller than tol</p></li>
+<li><p><strong>lu</strong> (<em>float</em><em>, </em><em>default=None</em>) -- Constant that multiplies the L1 term with respect to score(U),
+controlling regularization strength. lu must be a non-negative float i.e. in [0, inf).</p></li>
+<li><p><strong>lv</strong> (<em>float</em><em>, </em><em>default=None</em>) -- Constant that multiplies the L1 term with respect to loading(V),
+controlling regularization strength. lu must be a non-negative float i.e. in [0, inf).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.X">
+<span class="sig-name descname"><span class="pre">X</span></span><a class="headerlink" href="#igPCA.GMD.GMD.X" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>{array-like, sparse matrix of shape (int n, int p)}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.H">
+<span class="sig-name descname"><span class="pre">H</span></span><a class="headerlink" href="#igPCA.GMD.GMD.H" title="Link to this definition"></a></dt>
+<dd><p>Matrix Characterizing the (dis)similarity structure of sample space of X</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>{array-like, matrix} of shape (int n, int n)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.Q">
+<span class="sig-name descname"><span class="pre">Q</span></span><a class="headerlink" href="#igPCA.GMD.GMD.Q" title="Link to this definition"></a></dt>
+<dd><p>Matrix Characterizing the (dis)similarity structure of variable space of X</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>{array-like, matrix} of shape (int p, int p)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.K">
+<span class="sig-name descname"><span class="pre">K</span></span><a class="headerlink" href="#igPCA.GMD.GMD.K" title="Link to this definition"></a></dt>
+<dd><p>Number of components to keep</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int, default=3</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.max_iter">
+<span class="sig-name descname"><span class="pre">max_iter</span></span><a class="headerlink" href="#igPCA.GMD.GMD.max_iter" title="Link to this definition"></a></dt>
+<dd><p>The maximum number of iterations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int, default=50</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.tol">
+<span class="sig-name descname"><span class="pre">tol</span></span><a class="headerlink" href="#igPCA.GMD.GMD.tol" title="Link to this definition"></a></dt>
+<dd><p>The tolerance for the optimization: if the updates are smaller than tol, the
+optimization code checks the dual gap for optimality and continues until it
+is smaller than tol</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float, default=1e-4</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.lu">
+<span class="sig-name descname"><span class="pre">lu</span></span><a class="headerlink" href="#igPCA.GMD.GMD.lu" title="Link to this definition"></a></dt>
+<dd><p>Constant that multiplies the L1 term with respect to score(U),
+controlling regularization strength. lu must be a non-negative float i.e. in [0, inf).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float, default=None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.lv">
+<span class="sig-name descname"><span class="pre">lv</span></span><a class="headerlink" href="#igPCA.GMD.GMD.lv" title="Link to this definition"></a></dt>
+<dd><p>Constant that multiplies the L1 term with respect to loading(V),
+controlling regularization strength. lu must be a non-negative float i.e. in [0, inf).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float, default=None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.U">
+<span class="sig-name descname"><span class="pre">U</span></span><a class="headerlink" href="#igPCA.GMD.GMD.U" title="Link to this definition"></a></dt>
+<dd><p>Estimated GMD score</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>{array-like, matrix} of shape (n, K)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.D">
+<span class="sig-name descname"><span class="pre">D</span></span><a class="headerlink" href="#igPCA.GMD.GMD.D" title="Link to this definition"></a></dt>
+<dd><p>Estimated GMD value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>{array-like} of shape (K)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.V">
+<span class="sig-name descname"><span class="pre">V</span></span><a class="headerlink" href="#igPCA.GMD.GMD.V" title="Link to this definition"></a></dt>
+<dd><p>Estimated GMD loading</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>{array-like, matrix} of shape (p, K)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.X_hat">
+<span class="sig-name descname"><span class="pre">X_hat</span></span><a class="headerlink" href="#igPCA.GMD.GMD.X_hat" title="Link to this definition"></a></dt>
+<dd><p>Estimated GMD value, it is equivalent to the mean matrix of X when assuming
+<code class="docutils literal notranslate"><span class="pre">X</span> <span class="pre">~</span> <span class="pre">MN_{n,p}(X_hat,</span> <span class="pre">H^{-1},</span> <span class="pre">Q^{-1})</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>{array-like, matrix} of shape (n, K)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.__soft_thresholding__">
+<span class="sig-name descname"><span class="pre">__soft_thresholding__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/GMD.html#GMD.__soft_thresholding__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.GMD.GMD.__soft_thresholding__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.__compute_A_norm__">
+<span class="sig-name descname"><span class="pre">__compute_A_norm__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/GMD.html#GMD.__compute_A_norm__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.GMD.GMD.__compute_A_norm__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.__initialize_uv__">
+<span class="sig-name descname"><span class="pre">__initialize_uv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/GMD.html#GMD.__initialize_uv__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.GMD.GMD.__initialize_uv__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.__compute_uv_vector__">
+<span class="sig-name descname"><span class="pre">__compute_uv_vector__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/GMD.html#GMD.__compute_uv_vector__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.GMD.GMD.__compute_uv_vector__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.__compute_d__">
+<span class="sig-name descname"><span class="pre">__compute_d__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/GMD.html#GMD.__compute_d__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.GMD.GMD.__compute_d__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.__compute_X__">
+<span class="sig-name descname"><span class="pre">__compute_X__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/GMD.html#GMD.__compute_X__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.GMD.GMD.__compute_X__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.__GMD_result__">
+<span class="sig-name descname"><span class="pre">__GMD_result__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/GMD.html#GMD.__GMD_result__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.GMD.GMD.__GMD_result__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="igPCA.GMD.GMD.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/igPCA/GMD.html#GMD.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#igPCA.GMD.GMD.fit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Xinyi Xie.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
