@@ -1,0 +1,11 @@
+README.md
+pyproject.toml
+setup.py
+igPCA/GMD.py
+igPCA/Selection.py
+igPCA/__init__.py
+igPCA/igPCA.py
+igPCA.egg-info/PKG-INFO
+igPCA.egg-info/SOURCES.txt
+igPCA.egg-info/dependency_links.txt
+igPCA.egg-info/top_level.txt

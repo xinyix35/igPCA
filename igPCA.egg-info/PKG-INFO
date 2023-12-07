@@ -1,0 +1,41 @@
+Metadata-Version: 2.1
+Name: igPCA
+Version: 1.0.1
+Summary: Integrative Generalized Principle Analysis
+Home-page: https://github.com/xinyix35/igPCA
+Author: Xinyi Xie
+Author-email: xinyix35@uw.edu
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+
+# Intergative Generalized Principle Componenet Analysis (igPCA)
+
+Intergative Generalized Principle Componenet Analysis (igPCA) is a framework for joint dimensionality reduction of double-structure data. The algorithm details wiil be available soon in out manuscript:
+    Xie X and Ma J (2023). * Structured dimensionality reduction for multi-view microbiome data*
+
+`igPCA` is a python implementation of the proposed framework.
+
+## Installation
+
+```bash
+$ pip install igPCA
+```
+
+## Usage
+
+`igPCA` can be used to perform joint dimensinality reduction for two dataset X1 and X2 as follows:
+
+```python
+from .igPCA import igPCA
+import matplotlib.pyplot as plt
+
+model = igPCA(X1, X2, H, Q1, Q2, r1, r2)
+model.fit(r0 = r0)
+```
+
+In this simple example, H, Q1 and Q2 are kernel matrices characterzing X1 and X2. The total rank for X1 and X2 are r1 and r2, respectively. r0 is the joint rank between X1 and X2.
+
+

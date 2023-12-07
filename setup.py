@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="igPCA",
-    version="1.0.0",
+    version="1.0.1",
     author="Xinyi Xie",
     author_email="xinyix35@uw.edu",
     description="Integrative Generalized Principle Analysis",
