@@ -25,4 +25,4 @@ model.fit(r0 = r0)
 In this simple example, H, Q1 and Q2 are kernel matrices characterzing X1 and X2. The total rank for X1 and X2 are r1 and r2, respectively. r0 is the joint rank between X1 and X2.
 
 ## Note 
-We are cuurently working on the document of the package. If you have any questions regarding the usage, please email: xinyix35@uw.edu
+We are cuurently working on the document of the package. If you have any questions regarding the usage, please email: xinyix35@gmail.com
