@@ -16,8 +16,6 @@ $ pip install igPCA
 `igPCA` can be used to perform joint dimensinality reduction for two dataset X1 and X2 as follows:
 
 ```python
-from .igPCA import igPCA
-
 model = igPCA(X1, X2, H, Q1, Q2, r1, r2)
 model.fit(r0 = r0)
 ```
